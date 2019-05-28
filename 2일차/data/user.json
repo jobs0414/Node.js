@@ -1,0 +1,14 @@
+{
+	"first_user": {
+		"password": "first_password",
+		"name": "minkyo"
+	},
+	"second_user": {
+		"password": "second_password",
+		"name": "changOh"
+	},
+	"newuser": {
+		"password": "안녕?",
+		"name": "이빵글"
+	}
+}
