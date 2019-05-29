@@ -1,0 +1,29 @@
+# DB 생성
+CREATE DATABASE node_practice default CHARACTER SET UTF8;
+show databases;
+
+# 사용자 추가
+GRANT ALL PRIVILLEGES ON node_practice TO minkyo@localhost IDENTIFIED BY 'minkyo';
+EXIT;
+mysql -u minkyo -p
+USE node_practice
+
+# 테이블 생성
+CREATE TABLE node_first (
+    _id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(32),
+    age INT
+);
+
+# 데이터 삽입
+INSERT INTO node_first 
+(name, age)
+VALUES('이빵글', '5');
+
+INSERT INTO node_first
+(name, age)
+VALUES('유중위', '5');
+
+# 데이터 조회
+SELECT _id, age, name FROM node_first;
+SELECT * FROM node_first
