@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .emailForm {
+            display: inline-block;
+        }
+        ajaxbTn {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    
+    <form action="/email" method="post" class="emailForm">
+        <input type="text" name="email" class="emailFormInput">
+        <input type="submit">
+    </form>
+
+    <button class="ajaxBtn">Ajax로 보내기</button>
+    <p class="ajaxResult"></p>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let ajaxBtn = document.querySelector('.ajaxBtn')
+        ajaxBtn.addEventListener('click', function(event) {
+
+            let email = document.querySelector('.emailFormInput').value
+            let data = { email : email }
+            let ajaxResult = document.querySelector('.ajaxResult')
+
+            axios.post('/email/ajax', data)
+            .then( response => {
+                // console.log(response.data.email)
+                ajaxResult.innerHTML = response.data.email 
+            })
+
+        })
+    </script>
+</body>
+</html>

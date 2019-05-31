@@ -1,6 +1,17 @@
-let express = require("express")
-let app = express()
-let bodyParser = require("body-parser")
+var express = require("express")
+var bodyParser = require("body-parser")
+var app = express()
+var mysql = require('mysql')
+
+var connection = mysql.createConnection({
+    host : 'localhost',
+    port : 3306,
+    user : 'bbangul',
+    password: 'minkyo',
+    database : 'may30'
+})
+
+connection.connect()
 
 
 app.listen(3000, function() {
@@ -32,12 +43,20 @@ app.post('/email_post', function(req, res) {
 })
 
 app.post('/ajax_send_email', function(req, res){
-    console.log(req.body.email)
-    // check validation about input value => select DB (DB조회해서 유효성 검사)
-    let responseData = {'result' : 'ok', 'email' : req.body.email}
-    res.json(responseData)
-    // let email = req.body.email
+
+    let email = req.body.email
+    let responseData = {}
+
+    let query = connection.query('SELECT * FROM Persons', function(err, rows){
+        if (rows[0]) {
+            responseData.result = "ok"
+            responseData.NAME = rows[0].NAME
+        } else {
+            responseData.result = "none"
+            responseData.name = ""
+        }
+        res.json(responseData)
+    })
 })
 
 console.log("end of server code ...!!!")
-

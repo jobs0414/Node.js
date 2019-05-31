@@ -94,7 +94,7 @@ CREATE TABLE node_first (
 );
 
 # 테이블 목록 조회
-SHOW TABLES:
+SHOW TABLES;
 ```
 
 - `DESCRIBE 테이블명;` 으로 해당 테이블의 컬럼 조회가 가능하다.
