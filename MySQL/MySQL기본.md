@@ -59,7 +59,7 @@ show databases;
 # 사용자 추가
 create user 'minkyo'@'localhost' identified by 'minkyo';
 GRANT ALL privileges ON node_practice.* TO 'minkyo'@'localhost';
-EXIT;
+EXIT;	
 winpty mysql -u minkyo -p
 USE node_practice
 ```

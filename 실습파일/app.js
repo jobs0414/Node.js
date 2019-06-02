@@ -1,5 +1,6 @@
 let express = require('express')
 let mysql = require('mysql')
+
 let app = express()
 let bodyParser = require('body-parser')
 
@@ -9,7 +10,7 @@ let connection = mysql.createConnection({
     user : 'bbangul',
     password : 'minkyo',
     port : '3306',
-    database : 'may30'
+    database : 'june02'
 })
 connection.connect()
 
@@ -35,4 +36,6 @@ app.use(index)
 app.use('/main', main)
 app.use('/email', email)
 
-app.listen(3000)
+app.listen(3000, function(){
+    console.log("the server is running on port 3000!")
+})
