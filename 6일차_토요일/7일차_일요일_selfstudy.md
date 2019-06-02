@@ -19,6 +19,14 @@
 
 
 
+## Var vs. Let
+
+ES6를 사용할 때는 `let`과 `const`를 차용해서 사용하는 것이 권장된다.
+
+`var`는 그만 보내주자...
+
+
+
 ## Router Refactoring
 
 App.js 라는 서버를 실행시키는 파일 아래에 `index.js`라는 라우터를 하나 두고,
@@ -97,13 +105,65 @@ router.post('/', function(req, res) {
 
 # Session
 
+> Wait, 세션이란 정확히 무엇일까?
+>
+> 세션은 일정시간동안 같은 사용자(브라우저라고 보면 됩니다.)로부터 들어오는 일련의 요구를 __하나의 상태__라고 보고 그 상태를 일정하게 유지시키는 기술입니다. 여기서 일정시간이란 해당 방문자가 웹 브라우저를 통해 웹 서버에 접속한 시점으로부터 웹 브라우저를 종료함으로써 연결을 끝내는 시점을 말합니다. 
+>
+> __쿠키__와의 차이점이라고하면 쿠키는 방문자의 정보를 __해당 사용자의 컴퓨터 메모리에__ 저장한다는 것이다. 
+
 로그인 정보를 서버에서 유저의 상태값을 계속 유지함으로써, 서버가 사용자의 status를 계속 확인 가능.
 
 최근에는 token 방식의 인증 방식도 있다!
 
 여태까지는 전통적으로 post방식으로 사용자로부터 정보를 입력받아 처리했는데, 이제는 `passport`라는 것을 이용한다. 
 
-설치 목록
+<설치 목록>
+
+```bash
+$ npm install passport passport-local express-session connect-flash --save
+```
+
+- 자세한 내용은 `passport.js` 관련 공식 문서 참조할 것 (<http://www.passportjs.org/>)
+
+- <https://github.com/jaredhanson/passport>
+- <https://www.zerocho.com/category/NodeJS/post/57b7101ecfbef617003bf457>
+
+
+
+가장 먼저 `app.js`에서 필요한 모듈__(middleware)__들을 불러와줍니다.
+
+```javascript
+// app.js
+let passport = require('passport')
+let localStrategy = require('passport-local').Strategy
+let session = require('express-session')
+let flash = require('connect-flash')
+```
+
+- `passport-local`: 로그인을 직접 구현할 때 사용됩니다. 이외에, 소셜로그인을 사용할 때는 뒤에 kakao, naver 등으로 이름을 붙여서 사용할 수도 있습니다.
+- `express-session` : passport로 로그인 후 유저 정보를 세션에 저장하기 위해 사용됩니다.
+
+- `Strategy` : `passport` 라이브러리에서 사용하는 용어인데, 사용자의 요청에 대해 권한부여를 할 때 검증하는 수단이라고 보면 됩니다. 
+- `connect-flash` : express 미들웨어 중 인기있는 녀석입니다. 세션의 한 부분으로써 메세지를 저장하는 부분을 `flash`라고 부르는데 이 `connect-flash`라는 녀석은 이렇게 `flash`에 메세지를 저장하고 또 유저에게 보여진 후 말끔하게 지워버리는 작업들을 도와주는 녀석이라고 보면 됩니다.
+
+이제 공식 문서를 참조해서 필요한 사항들을 설정해줍니다.
+
+```javascript
+// app.js
+// passport 관련 middleware 불러오기
+app.user(session({
+    secret : 'keyboard secret!',
+    resave: false,
+    saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
+```
+
+
+
+
 
 
 

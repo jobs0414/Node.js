@@ -1,8 +1,11 @@
 let express = require('express')
 let mysql = require('mysql')
-
 let app = express()
 let bodyParser = require('body-parser')
+let passport = require('passport')
+let localStrategy = require('passport-local').Strategy
+let session = require('express-session')
+let flash = require('connect-flash')
 
 // mysql DB 연동
 let connection = mysql.createConnection({
@@ -30,6 +33,16 @@ app.use(bodyParser.urlencoded())
 let index = require('./router/index')
 let main = require('./router/main')
 let email = require('./router/email')
+
+// passport 관련 middleware 불러오기
+app.use(session({
+    secret : 'keyboard secret!',
+    resave: false,
+    saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
 
 // router 모듈화
 app.use(index)
