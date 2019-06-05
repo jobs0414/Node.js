@@ -13,7 +13,7 @@ let connection = mysql.createConnection({
     user : 'bbangul',
     password : 'minkyo',
     port : '3306',
-    database : 'june02'
+    database : 'users'
 })
 connection.connect()
 

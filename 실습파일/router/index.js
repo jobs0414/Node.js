@@ -11,7 +11,7 @@ let connection = mysql.createConnection({
     user: 'bbangul',
     password: 'minkyo',
     port: '3306',
-    database: 'june02'
+    database: 'users'
 })
 connection.connect()
 
@@ -26,21 +26,21 @@ router.get("/", function (req, res) {
 
     // issue: 비동기이므로 render가 query문이 올 때 까지 기다리지 않는다.
     // 따라서 context가 비어있는 상태로 날아가게 된다.
-    connection.query('SELECT * FROM Persons', function (err, rows, fields) {
-        if (!err) {
-            rows.forEach(person => {
-                // console.log(person)
-                personInfo = {
-                    name: person.NAME,
-                    age: person.AGE
-                }
-                context.persons.push(personInfo)
-                console.log("waittttttttttttttttttttttttt")
-            })
-        } else {
-            console.log('Sorry, something went wrong!')
-        }
-    })
+    // connection.query('SELECT * FROM users', function (err, rows, fields) {
+    //     if (!err) {
+    //         rows.forEach(person => {
+    //             // console.log(person)
+    //             personInfo = {
+    //                 name: person.NAME,
+    //                 age: person.AGE
+    //             }
+    //             context.persons.push(personInfo)
+    //             console.log("waittttttttttttttttttttttttt")
+    //         })
+    //     } else {
+    //         console.log('Sorry, something went wrong!')
+    //     }
+    // })
 
     console.log(context)
     res.render('indexTemplate.html', context)
